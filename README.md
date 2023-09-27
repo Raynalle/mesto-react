@@ -13,3 +13,7 @@ Webpack
 Npm
 Babel
 БЭМ
+
+## Сылка на Github Pages
+
+https://raynalle.github.io/mesto-react/
