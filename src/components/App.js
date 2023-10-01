@@ -14,7 +14,6 @@ function App() {
 
     const [selectedCard, setSelectedCard] = React.useState(null);
 
-
     const handleEditAvatarClick = () => {
         setEditAvatarPopupState(true);
     }
@@ -39,7 +38,6 @@ function App() {
     }
 
   return (
-    <>
     <div className="page">
         <div className="page__wrapper">
             <Header/>
@@ -49,8 +47,13 @@ function App() {
             onAddPlace = {handleAddPlaceClick}
             onCardClick = {handleCardPopupClick}
             />
-            <PopupWithForm name="edit-profile" title = "Редактировать профиль" isOpen = {isEditProfilePopupOpen}
-            onClose = {closeAllPopups} children={<>
+            <PopupWithForm 
+            name="edit-profile" 
+            title = "Редактировать профиль" 
+            isOpen = {isEditProfilePopupOpen}            
+            onClose = {closeAllPopups}
+            buttonText = "Сохранить"
+            >
                 <div className="popup__fields">
                     <label className="popup__label-field">
                         <input className="popup__field" type="text" name="name" id="name" placeholder="Ваше имя" required minLength="2" maxLength="40"/>
@@ -61,11 +64,15 @@ function App() {
                         <span className="popup__input-error description-error"></span>
                     </label>
                 </div>
-                <button className="popup__button-submit" type="submit">Сохранить</button>
-            </>}/>
+            </PopupWithForm>
                 
-            <PopupWithForm name="add-profile" title = "Новое место" isOpen = {isAddPlacePopupOpen} 
-            onClose = {closeAllPopups} children={<>
+            <PopupWithForm 
+            name="add-profile" 
+            title = "Новое место" 
+            isOpen = {isAddPlacePopupOpen} 
+            onClose = {closeAllPopups} 
+            buttonText = "Создать"
+            >
                 <div className="popup__fields">
                     <label className="popup__label-field">
                         <input className="popup__field" type="text" name="name" id="name-photo" placeholder="Название" required minLength="2" maxLength="30"/>
@@ -76,32 +83,34 @@ function App() {
                         <span className="popup__input-error link-photo-error"></span>
                     </label>
                 </div>
-                <button className="popup__button-submit" type="submit">Создать</button>
-            </>}/>
+            </PopupWithForm>
 
-            <PopupWithForm name="form-confirm" title = "Вы уверены?" children={<>
-                <button className="popup__button-submit" type="submit">Да</button>
-            </>}/> 
+            <PopupWithForm 
+            name="form-confirm" 
+            title = "Вы уверены?" 
+            buttonText = "Да"
+            /> 
             
-            <PopupWithForm name="form-editAvatar" title = "Обновить аватар" isOpen = {isEditAvatarPopupOpen} 
-            onClose = {closeAllPopups} children={<>
+            <PopupWithForm 
+            name="form-editAvatar" 
+            title = "Обновить аватар" 
+            isOpen = {isEditAvatarPopupOpen}
+            onClose = {closeAllPopups}
+            buttonText = "Сохранить" 
+            >
                 <label className="popup__label-field" htmlFor="avatar">
                     <input className="popup__field" type="url" name="avatar" id="avatar" placeholder="Ссылка на новый аватар" required />
                     <span className="popup__input-error avatar-error"></span>
                 </label>
-                <button className="popup__button-submit popup__button-submit_margin" type="submit" id="button-save-avatar">Сохранить</button>
-            </>}/>
+            </PopupWithForm>
 
-            <PopupWithForm name="delite-card" title="Вы уверены?" children={
-                <button className="popup__button-submit" type="submit">Да</button>
-            }/>
-
-            <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
+            <ImagePopup 
+            card={selectedCard} 
+            onClose={closeAllPopups}/>
 
             <Footer/>
         </div>
     </div>
-    </>
   );
 }
 

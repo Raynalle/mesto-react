@@ -9,31 +9,25 @@ function Main(props) {
 
     const [cards, setCards] = React.useState([]);
 
-   React.useEffect(() => {
-    Promise.resolve(api.getUserInfo())
-    .then(response => {
-        setUserName(response.name);
-    })
-   });
+    React.useEffect(() => {
+      api.getUserInfo()
+        .then(response => {
+            setUserName(response.name);
+            setUserDescription(response.about);
+            setUserAvatar(response.avatar);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }, []);
 
    React.useEffect(() => {
-    Promise.resolve(api.getUserInfo())
-    .then(response => {
-        setUserDescription(response.about);
-    })
-   });
-
-   React.useEffect(() => {
-    Promise.resolve(api.getUserInfo())
-    .then(response => {
-        setUserAvatar(response.avatar);
-    })
-   });
-
-   React.useEffect(() => {
-    Promise.resolve(api.getCards())
+    api.getCards()
     .then(response => {
         setCards(response);
+    })
+    .catch((error) => {
+        console.log(error);
     })
    }, []);
 
@@ -54,7 +48,11 @@ function Main(props) {
             </section>
             <section className="elements">
                 {cards.map(card => (
-                    <Card card = {card} key = {card._id} onCardClick={props.onCardClick}/>
+                    <Card 
+                    card = {card} 
+                    key = {card._id}
+                    like = {card.likes}
+                    onCardClick={props.onCardClick}/>
                 ))}
             </section>
         </main>
