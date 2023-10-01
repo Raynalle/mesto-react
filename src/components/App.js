@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import { api } from "../utils/Api";
 
 
 function App() {
@@ -13,6 +14,22 @@ function App() {
     const [isEditAvatarPopupOpen, setEditAvatarPopupState] = React.useState(false);
 
     const [selectedCard, setSelectedCard] = React.useState(null);
+
+    const [userName, setUserName] = React.useState('');
+    const [userDescription, setUserDescription] = React.useState('');
+    const [userAvatar, setUserAvatar] = React.useState('');
+
+    React.useEffect(() => {
+        api.getUserInfo()
+          .then(response => {
+              setUserName(response.name);
+              setUserDescription(response.about);
+              setUserAvatar(response.avatar);
+          })
+          .catch((error) => {
+              console.log(error);
+          })
+      }, []);
 
     const handleEditAvatarClick = () => {
         setEditAvatarPopupState(true);
@@ -46,6 +63,9 @@ function App() {
             onEditProfileAvatar = {handleEditAvatarClick}
             onAddPlace = {handleAddPlaceClick}
             onCardClick = {handleCardPopupClick}
+            userName = {userName}
+            userDescription = {userDescription}
+            userAvatar = {userAvatar}
             />
             <PopupWithForm 
             name="edit-profile" 
