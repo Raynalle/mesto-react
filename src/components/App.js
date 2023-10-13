@@ -51,27 +51,22 @@ function App() {
 
     const handleEditAvatarClick = () => {
         setEditAvatarPopupState(true);
-        document.addEventListener('keydown', handleKeyDown);
     }
 
     const handleProfileClick = () => {
         setEditProfilePopupState(true);
-        document.addEventListener('keydown', handleKeyDown);
     }
 
     const handleAddPlaceClick = () => {
         setAddPlacePopupState(true);
-        document.addEventListener('keydown', handleKeyDown);
     }
 
     const handleCardPopupClick = (card) => {
         setSelectedCard(card);
-        document.addEventListener('keydown', handleKeyDown);
     }
 
     const handleDeleteClick = (card) => {
         setDeletePlaceConfirm({isOpen:true, card:card});
-        document.addEventListener('keydown', handleKeyDown);
     }
 
     const handleUpdateUser = (info) => {
@@ -148,14 +143,26 @@ function App() {
         setEditProfilePopupState(false);
         setDeletePlaceConfirm({isOpen:false, card:{}});
         setSelectedCard(null);
-        document.removeEventListener('keydown', handleKeyDown);
     }
 
-    const handleKeyDown = (evt) => {
-        if(evt.keyCode === 27) {
+
+
+     
+    const isOpen = isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || deletePlaceConfirm;
+    React.useEffect(() => {
+        if (!isOpen) return // если все попапы закрыты — ничего не делаем
+
+        const closeByEscape = (e) => {
+            if (e.key === 'Escape') {
             closeAllPopups();
+            }
         }
-    }
+
+        document.addEventListener('keydown', closeByEscape)
+      
+        return () => document.removeEventListener('keydown', closeByEscape)
+    }, [isOpen])
+  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -174,13 +181,13 @@ function App() {
 
                 <Footer/>
 
-                <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} buttonText = {buttonTextEditProfile} onKeyDown = {handleKeyDown}/>
+                <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} buttonText = {buttonTextEditProfile}/>
 
-                <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onChangeAvatar={handleChangeAvatar} buttonText = {buttonTextEditAvatar} onKeyDown = {handleKeyDown}/>
+                <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onChangeAvatar={handleChangeAvatar} buttonText = {buttonTextEditAvatar}/>
 
-                <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlace} buttonText={buttonTextAddPlace} onKeyDown = {handleKeyDown}/>
+                <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlace} buttonText={buttonTextAddPlace}/>
 
-                <DeletePlaceConfirm isOpen={deletePlaceConfirm.isOpen} onClose={closeAllPopups} onCardDelete={handleCardDelete} buttonText = {buttonTextDeletePlace} onKeyDown = {handleKeyDown}
+                <DeletePlaceConfirm isOpen={deletePlaceConfirm.isOpen} onClose={closeAllPopups} onCardDelete={handleCardDelete} buttonText = {buttonTextDeletePlace}
                 card={deletePlaceConfirm.card}/>
 
                 <ImagePopup 
