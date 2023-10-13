@@ -70,6 +70,14 @@ class Api {
             headers: this._headers
         }).then(this._checkResponse);
     }
+
+    changeLikeCardStatus(id, isLiked){
+        if (isLiked){
+          return this.addLike(id);
+        }else{
+          return this.removeLike(id);
+        }
+      }
 }
 
 
