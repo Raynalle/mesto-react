@@ -54,7 +54,6 @@
 @import url(./blocks/popup/__label-field/popup__label-field.css);
 @import url(./blocks/popup/__field/_error/popup__field_error.css);
 
-
 /*попап картинка*/
 @import url(./blocks/popup/__container/_image/popup__container_image.css);
 @import url(./blocks/popup/__image/popup__image.css);
